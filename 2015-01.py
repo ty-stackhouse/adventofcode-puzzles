@@ -49,7 +49,18 @@ def solve_part1(data: typing.Any) -> typing.Any:
 
 def solve_part2(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 2 logic...')
-    return 'Not Implemented'
+    floor = 0
+    position = 0
+    for line in str(data).splitlines():
+        for c in line.strip():
+            position += 1
+            if c == '(':
+                floor += 1
+            elif c == ')':
+                floor -= 1
+            if floor == -1:
+                return position
+    return None
 
 def run_solver(func, data, label: str):
     start_time = time.perf_counter()
