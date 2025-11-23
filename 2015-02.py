@@ -1,4 +1,5 @@
 import logging
+import math
 import os
 import sys
 import time
@@ -22,11 +23,13 @@ def read_input(filename: str = 'input.txt') -> str:
 #A present with dimensions 1x1x10 requires 2*1 + 2*10 + 2*10 = 42 square feet of wrapping paper plus 1 square foot of slack, for a total of 43 square feet.
 #All numbers in the elves' list are in feet. How many total square feet of wrapping paper should they order?
 
-def get_side_areas_from_dimenstions(dims_str: str) -> tuple[int, int, int]:
-    '''Helper function to get the three dimensions of a box from its dimensions string.'''
+def get_dimensions_from_string(dims_str: str) -> tuple[int, int, int]:
     tokens = dims_str.split('x')
     assert len(tokens) == 3, f'Invalid dimensions string: {dims}'
     dims = tuple(int(token) for token in tokens)
+    return dims
+
+def get_side_areas_from_dimensions(dims: tuple[int, int, int]) -> tuple[int, int, int]:
     side1, side2, side3 = dims[0]*dims[1], dims[1]*dims[2], dims[0]*dims[2]
     return side1, side2, side3
 
@@ -42,7 +45,8 @@ def get_total_wrapping_paper_from_dimenstions(sides: tuple[int, int, int]) -> in
 def solve_part1(data: typing.Any) -> typing.Any:
     total = 0
     for line in data.splitlines():
-        sides = get_side_areas_from_dimenstions(line.strip())
+        dims = get_dimensions_from_string(line.strip())
+        sides = get_side_areas_from_dimensions(dims)
         total += get_total_wrapping_paper_from_dimenstions(sides)
     return total
 
@@ -61,11 +65,21 @@ def solve_part1(data: typing.Any) -> typing.Any:
 
 def solve_part2(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 2 logic...')
-    #total = 0
-    #for line in data.splitlines():
-        #sides = get_side_areas_from_dimenstions(line.strip())
+    total = 0
+    for line in data.splitlines():
+        dims = get_dimensions_from_string(line.strip())
+        sides = get_side_areas_from_dimensions(dims)
+        smallest_side = get_smallest_side(dims)
+        perimeter = 2 * (smallest_side[0] + smallest_side[1])
+        bow_size = math.prod(dims)
+        logger.debug(f'box with dimensions "{line.strip()}" with a small side of "{smallest_side}" requires perimeter {perimeter} and bow size {bow_size}')
+        total += perimeter + bow_size
+    return total
 
-    return 'Not Implemented'
+def get_smallest_side(sides: tuple[int, int, int]) -> tuple[int, int]:
+    '''Helper function to get the two smallest sides from the three side areas of a box.'''
+    sorted_sides = sorted(sides)
+    return sorted_sides[0], sorted_sides[1]
 
 def run_solver(func, data, label: str):
     start_time = time.perf_counter()
