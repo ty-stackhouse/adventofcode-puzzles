@@ -12,9 +12,16 @@ def read_input(filename: str = 'input.txt') -> str:
     with open(file_path, 'r') as f:
         return f.read().strip()
 
+# Santa needs help mining some AdventCoins (very similar to bitcoins) to use as gifts for all the economically forward-thinking little girls and boys.
 def solve_part1(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 1 logic...')
-    return 'Not Implemented'
+    # Convert the input data into a list of integers
+    numbers = [int(num) for num in data.split()]
+    
+    # Calculate the sum of all the numbers
+    total_sum = sum(numbers)
+    
+    return total_sum
 
 def solve_part2(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 2 logic...')
