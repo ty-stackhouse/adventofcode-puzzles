@@ -32,6 +32,10 @@ def solve_part1(data: typing.Any) -> typing.Any:
         
         # Increment the number
         number += 1
+        
+        # Add debug statement every 100 checksums
+        if number % 100 == 0:
+            logger.debug(f'Processed {number} checksums')
 
 def solve_part2(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 2 logic...')
@@ -63,7 +67,7 @@ if __name__ == '__main__':
     )
 
     if log_level == logging.DEBUG:
-        logging.debug('Debug logging enabled.')
+        logger.debug('Debug logging enabled.')
 
     try:
         raw_input = read_input()
