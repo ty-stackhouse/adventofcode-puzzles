@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 import time
+import hashlib
 import typing
 
 logger = logging.getLogger()
@@ -15,13 +16,22 @@ def read_input(filename: str = 'input.txt') -> str:
 # Santa needs help mining some AdventCoins (very similar to bitcoins) to use as gifts for all the economically forward-thinking little girls and boys.
 def solve_part1(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 1 logic...')
-    # Convert the input data into a list of integers
-    numbers = [int(num) for num in data.split()]
+    # Convert the input data into a string
+    secret_key = data
     
-    # Calculate the sum of all the numbers
-    total_sum = sum(numbers)
+    # Initialize the number
+    number = 0
     
-    return total_sum
+    while True:
+        # Create the MD5 hash
+        md5_hash = hashlib.md5(f"{secret_key}{number}".encode()).hexdigest()
+        
+        # Check if the hash starts with at least five zeroes
+        if md5_hash.startswith('00000'):
+            return number
+        
+        # Increment the number
+        number += 1
 
 def solve_part2(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 2 logic...')
