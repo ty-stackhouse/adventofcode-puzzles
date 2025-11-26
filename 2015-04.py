@@ -33,9 +33,9 @@ def solve_part1(data: typing.Any) -> typing.Any:
         # Increment the number
         number += 1
         
-        # Add debug statement every 100 checksums
-        if number % 100 == 0:
-            logger.debug(f'Processed {number} checksums')
+        # Add debug statement every 1000 checksums
+        if number % 1000 == 0:
+            logger.debug(f'Processed {number // 1000}k checksums')
 
 def solve_part2(data: typing.Any) -> typing.Any:
     logger.debug('Starting Part 2 logic...')
