@@ -28,6 +28,7 @@ def solve_part1(data: typing.Any) -> typing.Any:
         
         # Check if the hash starts with at least five zeroes
         if md5_hash.startswith('00000'):
+            logger.debug(f'Found valid number: {number}')  # Add debug statement to print the exact number
             return number
         
         # Increment the number
